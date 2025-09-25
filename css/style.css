@@ -140,6 +140,12 @@ body {
     color: #d4af37;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
+.conjunction {
+    font-family: 'Ballet', cursive;
+    font-size: 4rem;
+    color: #d4af37;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
 
 .wedding-details {
     font-family: 'Poiret One', cursive;
@@ -1172,3 +1178,9 @@ button:disabled {
         margin: 2px;
     }
 }
+
+
+
+
+
+

@@ -8,7 +8,7 @@
 
 $(document).on('click', function(){
     document.getElementById("my_audio").play();
-    console.log('Shaadi Mein Zaroor Aana');
+    console.log('Audio played on user interaction');
 });
 
 // Translations object
