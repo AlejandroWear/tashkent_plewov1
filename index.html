@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikoh to'yi - Abdullo & Azimaxon</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="💍 Abdullo & Azimaxon">
+    <meta property="og:description" content="Sizni aziz farzandlarimizning nikoh to'yiga taklif etamiz — 22 oktyabr 2025!">
+    <meta property="og:image" content="https://example.com/images/preview.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://meek-gelato-2836d6.netlify.app/">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poiret+One&family=Ballet:wght@400&family=Cormorant+Garamond:wght@300;400;500;600&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+      <script src='https://cdn.jsdelivr.net/gh/timoschaefer/jQuery-Sakura/jquery-sakura.min.js'></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Контейнер для анимации листьев -->
+    <div class="sakura-falling"></div>
+
+    <!-- Page 1: Invitation -->
+    <section class="page-section invitation-page" id="page1">
+        <div class="container">
+            <div class="page-content">
+                <div class="invitation-content glass-card">
+                    <h1 class="greeting">Assalom Alaykum!</h1>
+                    
+                    <div class="guest-name-section">
+                        <h1 class="guest-greeting">Hurmatli <span id="guestName">mehmon</span>!</h1>
+                    </div>
+                    
+                    <div class="invitation-text">
+                        <p class="main-text">Sizni aziz va suyukli farzandlarimiz</p>
+                        
+                        <div class="couple-names">
+                            <span class="groom-name">Abdullo</span>
+                            <span class="conjunction">va </span>
+                            <span class="bride-name">Azimaxon</span>
+                        </div>
+                        
+                        <p class="wedding-details">
+                            larning nikoh to'ylari munosabati bilan<br>
+                            <strong>2025 yil 22 oktyabr</strong> kuni soat <strong>7:00</strong><br>
+                            bo'lib o'tadigan <strong>"Amru-Maruf"</strong> osh<br>
+                            dasturhonimizga lutfan taklif etamiz!
+                        </p>
+                        
+                        <div class="family-signature">
+                            <p>Xurmat va ehtirom bilan<br>
+                            <strong>Ashrapov Farhod</strong> va<br>
+                            <strong>Atoyev Ismatillo</strong> oilasi.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 2: Location -->
+    <section class="page-section location-page" id="page2">
+        <div class="container">
+            <div class="page-content">
+                <h2 class="section-title">LOKATSIYA</h2>
+                
+                <div class="location-content">
+                    <div class="location-info glass-card">
+                        <h3 class="venue-name">"Amru-Maruf" osh</h3>
+                        <p class="venue-address">Toshkent shahri, Yunusobod tumani</p>
+                        <p class="venue-date">⏰ Sana: 22 oktyabr 2025 yil</p>
+                        <p class="venue-time">🕰 Vaqt: 7:00</p>
+                        
+                        <button class="directions-btn" onclick="openDirections()">YO'L-YO'RIQ OLISH</button>
+                    </div>
+                    
+                    <div class="map-container glass-card">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.114389202017!2d69.2644192!3d41.32812590000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8bff6c929ccd%3A0x33e452df20d712c8!2z0JjRgdGC0LjQutC70L7QuyDRgNC10YHRgtC-0YDQsNC9!5e0!3m2!1sru!2s!4v1758804113129!5m2!1sru!2s" 
+                            width="100%" 
+                            height="300" 
+                            style="border:0; border-radius: 10px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Page 3: Countdown -->
+    <section class="page-section countdown-page" id="page3">
+        <div class="container">
+            <div class="page-content">
+                <h2 class="section-title">TO'YIMIZGACHA QOLGAN VAQT</h2>
+                
+                <div class="countdown-timer">
+                    <div class="time-block glass-card">
+                        <span class="time-number" id="days">00</span>
+                        <span class="time-label">Kun</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-block glass-card">
+                        <span class="time-number" id="hours">00</span>
+                        <span class="time-label">Soat</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-block glass-card">
+                        <span class="time-number" id="minutes">00</span>
+                        <span class="time-label">Daqiqa</span>
+                    </div>
+                    <div class="time-separator">:</div>
+                    <div class="time-block glass-card">
+                        <span class="time-number" id="seconds">00</span>
+                        <span class="time-label">Soniya</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation dots -->
+    <div class="page-nav">
+        <div class="nav-dot active" onclick="goToPage(1)"></div>
+        <div class="nav-dot" onclick="goToPage(2)"></div>
+        <div class="nav-dot" onclick="goToPage(3)"></div>
+    </div>
+
+    <!-- Guest name input modal -->
+    <div class="guest-modal" id="guestModal">
+        <div class="modal-content glass-card">
+            <h3>Ismingizni kiriting</h3>
+            <input type="text" id="guestInput" placeholder="Ismingiz...">
+            <button onclick="setGuestName()">Tasdiqlash</button>
+            <button onclick="skipGuestName()">O'tkazib yuborish</button>
+        </div>
+    </div>
+
+        <!-- Блок 5: Действия -->
+<section class="actions-section">
+    <div class="container">
+        <button onclick="addToCalendar()">Kalendarga qo'shish</button>
+        <button onclick="shareOnSocial('telegram')">Telegramga yuborish</button>
+    </div>
+</section>
+
+      <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+      <script src='https://cdn.jsdelivr.net/gh/timoschaefer/jQuery-Sakura/jquery-sakura.min.js'></script>
+      <script  src="./js/script.js"></script>
+   </body>
+   <footer>Built with ❤️ by <b>Abdulla</b></footer>
+
+</html>

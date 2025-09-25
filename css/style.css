@@ -1,0 +1,1174 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    background: #fff;
+    position: relative;
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Page Sections */
+.page-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+    position: relative;
+}
+
+.page-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 100%;
+}
+
+/* Glass Card Styles */
+.glass-card {
+    width: 100%;
+    height: auto;
+    min-height: 360px;
+    background: rgba(255, 255, 255, 0.23);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.glass-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), transparent, rgba(255, 255, 255, 0.3));
+}
+
+/* Page 1: Invitation Styles */
+.invitation-page {
+    /* No additional background */
+}
+
+.invitation-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.greeting {
+    font-family: 'Poiret One', cursive;
+    font-size: 3.5rem;
+    margin-bottom: 40px;
+    color: #2c5530;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.guest-name-section {
+    margin-bottom: 50px;
+}
+
+.guest-greeting {
+    font-family: 'Poiret One', cursive;
+    font-size: 2.8rem;
+    color: #2c5530;
+}
+
+#guestName {
+    color: #d4af37;
+    font-weight: bold;
+}
+
+.main-text {
+    font-family: 'Poiret One', cursive;
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+    color: #444;
+}
+
+.couple-names {
+    margin: 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.groom-name,
+.bride-name {
+    font-family: 'Ballet', cursive;
+    font-size: 4rem;
+    color: #d4af37;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wedding-details {
+    font-family: 'Poiret One', cursive;
+    font-size: 1.4rem;
+    line-height: 2;
+    margin: 30px 0;
+    color: #444;
+}
+
+.wedding-details strong {
+    color: #2c5530;
+    font-weight: 600;
+}
+
+.family-signature {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 2px solid #d4af37;
+    text-align: center;
+}
+
+.family-signature p {
+    font-family: 'Poiret One', cursive;
+    font-size: 1.3rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.family-signature strong {
+    color: #2c5530;
+}
+
+/* Page 2: Location Styles */
+.location-page {
+    /* No additional background */
+}
+
+.location-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.location-info {
+    text-align: left;
+}
+
+.venue-name {
+    font-family: 'Ballet', cursive;
+    font-size: 3.5rem;
+    color: #2c5530;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.venue-address {
+    font-family: 'Poiret One', cursive;
+    font-size: 1.5rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.venue-time {
+    font-family: 'Poiret One', cursive;
+    font-size: 1.3rem;
+    color: #444;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.directions-btn {
+    background: #2c5530;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    font-family: 'Poiret One', cursive;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.directions-btn:hover {
+    background: #3c6540;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(44, 85, 48, 0.2);
+}
+
+.map-container {
+    padding: 20px 0;
+}
+
+.map-container iframe {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Page 3: Countdown Styles */
+.countdown-page {
+    /* No additional background */
+}
+
+.countdown-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+    gap: 10px;
+}
+
+.time-block {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.time-number {
+    display: block;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #2c5530;
+    font-family: 'Playfair Display', serif;
+}
+
+.time-label {
+    font-size: 1rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Poiret One', cursive;
+}
+
+.time-separator {
+    font-size: 2rem;
+    color: #444;
+    font-weight: 500;
+    margin: 0 5px;
+}
+
+/* Section Titles */
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.8rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 60px;
+    color: #2c5530;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 2px;
+}
+
+/* Navigation Dots */
+.page-nav {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.nav-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2c5530;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-dot.active,
+.nav-dot:hover {
+    background: #d4af37;
+    transform: scale(1.4);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+}
+
+/* Guest Modal */
+.guest-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.guest-modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    max-width: 450px;
+    width: 90%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+    font-family: 'Poiret One', cursive;
+    font-size: 2rem;
+    margin-bottom: 25px;
+    color: #2c5530;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-family: 'Poiret One', cursive;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content button {
+    background: #2c5530;
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Poiret One', cursive;
+    font-size: 1.1rem;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.modal-content button:hover {
+    background: #3c6540;
+    transform: translateY(-2px);
+}
+
+.modal-content button:last-child {
+    background: #666;
+}
+
+.modal-content button:last-child:hover {
+    background: #777;
+}
+
+/* Sakura Animations */
+.sakura-falling {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sakura {
+    background: #674ea7;
+    pointer-events: none;
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0;
+}
+
+/* Animation Keyframes */
+@-webkit-keyframes fall {
+    0% {
+        opacity: 0.9;
+        top: 0;
+    }
+    100% {
+        opacity: 0.2;
+        top: 100%;
+    }
+}
+
+@keyframes fall {
+    0% {
+        opacity: 0.9;
+        top: 0;
+    }
+    100% {
+        opacity: 0.2;
+        top: 100%;
+    }
+}
+
+@-webkit-keyframes blow-soft-left {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -50%;
+    }
+}
+
+@keyframes blow-soft-left {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -50%;
+    }
+}
+
+@-webkit-keyframes blow-medium-left {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -100%;
+    }
+}
+
+@keyframes blow-medium-left {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: -100%;
+    }
+}
+
+@-webkit-keyframes blow-soft-right {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: 50%;
+    }
+}
+
+@keyframes blow-soft-right {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: 50%;
+    }
+}
+
+@-webkit-keyframes blow-medium-right {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
+
+@keyframes blow-medium-right {
+    0% {
+        margin-left: 0;
+    }
+    100% {
+        margin-left: 100%;
+    }
+}
+
+@-webkit-keyframes sway-0 {
+    0% {
+        -webkit-transform: rotate(-5deg);
+    }
+    40% {
+        -webkit-transform: rotate(28deg);
+    }
+    100% {
+        -webkit-transform: rotate(3deg);
+    }
+}
+
+@keyframes sway-0 {
+    0% {
+        -ms-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+    }
+    40% {
+        -ms-transform: rotate(28deg);
+        transform: rotate(28deg);
+    }
+    100% {
+        -ms-transform: rotate(3deg);
+        transform: rotate(3deg);
+    }
+}
+
+@-webkit-keyframes sway-1 {
+    0% {
+        -webkit-transform: rotate(10deg);
+    }
+    40% {
+        -webkit-transform: rotate(43deg);
+    }
+    100% {
+        -webkit-transform: rotate(15deg);
+    }
+}
+
+@keyframes sway-1 {
+    0% {
+        -ms-transform: rotate(10deg);
+        transform: rotate(10deg);
+    }
+    40% {
+        -ms-transform: rotate(43deg);
+        transform: rotate(43deg);
+    }
+    100% {
+        -ms-transform: rotate(15deg);
+        transform: rotate(15deg);
+    }
+}
+
+@-webkit-keyframes sway-2 {
+    0% {
+        -webkit-transform: rotate(15deg);
+    }
+    40% {
+        -webkit-transform: rotate(56deg);
+    }
+    100% {
+        -webkit-transform: rotate(22deg);
+    }
+}
+
+@keyframes sway-2 {
+    0% {
+        -ms-transform: rotate(15deg);
+        transform: rotate(15deg);
+    }
+    40% {
+        -ms-transform: rotate(56deg);
+        transform: rotate(56deg);
+    }
+    100% {
+        -ms-transform: rotate(22deg);
+        transform: rotate(22deg);
+    }
+}
+
+@-webkit-keyframes sway-3 {
+    0% {
+        -webkit-transform: rotate(25deg);
+    }
+    40% {
+        -webkit-transform: rotate(74deg);
+    }
+    100% {
+        -webkit-transform: rotate(37deg);
+    }
+}
+
+@keyframes sway-3 {
+    0% {
+        -ms-transform: rotate(25deg);
+        transform: rotate(25deg);
+    }
+    40% {
+        -ms-transform: rotate(74deg);
+        transform: rotate(74deg);
+    }
+    100% {
+        -ms-transform: rotate(37deg);
+        transform: rotate(37deg);
+    }
+}
+
+@-webkit-keyframes sway-4 {
+    0% {
+        -webkit-transform: rotate(40deg);
+    }
+    40% {
+        -webkit-transform: rotate(68deg);
+    }
+    100% {
+        -webkit-transform: rotate(25deg);
+    }
+}
+
+@keyframes sway-4 {
+    0% {
+        -ms-transform: rotate(40deg);
+        transform: rotate(40deg);
+    }
+    40% {
+        -ms-transform: rotate(68deg);
+        transform: rotate(68deg);
+    }
+    100% {
+        -ms-transform: rotate(25deg);
+        transform: rotate(25deg);
+    }
+}
+
+@-webkit-keyframes sway-5 {
+    0% {
+        -webkit-transform: rotate(50deg);
+    }
+    40% {
+        -webkit-transform: rotate(78deg);
+    }
+    100% {
+        -webkit-transform: rotate(40deg);
+    }
+}
+
+@keyframes sway-5 {
+    0% {
+        -ms-transform: rotate(50deg);
+        transform: rotate(50deg);
+    }
+    40% {
+        -ms-transform: rotate(78deg);
+        transform: rotate(78deg);
+    }
+    100% {
+        -ms-transform: rotate(40deg);
+        transform: rotate(40deg);
+    }
+}
+
+@-webkit-keyframes sway-6 {
+    0% {
+        -webkit-transform: rotate(65deg);
+    }
+    40% {
+        -webkit-transform: rotate(92deg);
+    }
+    100% {
+        -webkit-transform: rotate(58deg);
+    }
+}
+
+@keyframes sway-6 {
+    0% {
+        -ms-transform: rotate(65deg);
+        transform: rotate(65deg);
+    }
+    40% {
+        -ms-transform: rotate(92deg);
+        transform: rotate(92deg);
+    }
+    100% {
+        -ms-transform: rotate(58deg);
+        transform: rotate(58deg);
+    }
+}
+
+@-webkit-keyframes sway-7 {
+    0% {
+        -webkit-transform: rotate(72deg);
+    }
+    40% {
+        -webkit-transform: rotate(118deg);
+    }
+    100% {
+        -webkit-transform: rotate(68deg);
+    }
+}
+
+@keyframes sway-7 {
+    0% {
+        -ms-transform: rotate(72deg);
+        transform: rotate(72deg);
+    }
+    40% {
+        -ms-transform: rotate(118deg);
+        transform: rotate(118deg);
+    }
+    100% {
+        -ms-transform: rotate(68deg);
+        transform: rotate(68deg);
+    }
+}
+
+@-webkit-keyframes sway-8 {
+    0% {
+        -webkit-transform: rotate(94deg);
+    }
+    40% {
+        -webkit-transform: rotate(136deg);
+    }
+    100% {
+        -webkit-transform: rotate(82deg);
+    }
+}
+
+@keyframes sway-8 {
+    0% {
+        -ms-transform: rotate(94deg);
+        transform: rotate(94deg);
+    }
+    40% {
+        -ms-transform: rotate(136deg);
+        transform: rotate(136deg);
+    }
+    100% {
+        -ms-transform: rotate(82deg);
+        transform: rotate(82deg);
+    }
+}
+
+/* Desktop Responsive (1280px and above) */
+@media (min-width: 1280px) {
+    .container {
+        padding: 0 40px;
+    }
+    
+    .invitation-content {
+        max-width: 900px;
+    }
+    
+    .greeting {
+        font-size: 4rem;
+    }
+    
+    .couple-names {
+        flex-direction: row;
+        gap: 40px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 4.5rem;
+    }
+    
+    .location-content {
+        grid-template-columns: 1fr 1.2fr;
+    }
+}
+
+/* Tablet Responsive (800px - 1279px) */
+@media (min-width: 800px) and (max-width: 1279px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    .invitation-content {
+        max-width: 700px;
+    }
+    
+    .greeting {
+        font-size: 3rem;
+    }
+    
+    .guest-greeting {
+        font-size: 2.3rem;
+    }
+    
+    .couple-names {
+        gap: 25px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 3.5rem;
+    }
+    
+    .section-title {
+        font-size: 3.5rem;
+    }
+    
+    .location-content {
+        gap: 40px;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .time-block {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .time-number {
+        font-size: 2rem;
+    }
+    
+    .time-label {
+        font-size: 0.9rem;
+    }
+    
+    .time-separator {
+        font-size: 1.8rem;
+    }
+    
+    .map-container iframe {
+        height: 250px;
+    }
+}
+
+/* Mobile Responsive (below 800px) */
+@media (max-width: 799px) {
+    .container {
+        padding: 0 10px;
+    }
+    
+    .page-section {
+        padding: 20px 0;
+    }
+    
+    .invitation-content {
+        max-width: 100%;
+        margin: 10px;
+    }
+    
+    .greeting {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+    }
+    
+    .guest-greeting {
+        font-size: 1.7rem;
+    }
+    
+    .main-text {
+        font-size: 1.3rem;
+    }
+    
+    .couple-names {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 2.8rem;
+    }
+    
+    .wedding-details {
+        font-size: 1.2rem;
+        line-height: 1.7;
+    }
+    
+    .family-signature p {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+    }
+    
+    .location-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .location-info {
+        padding: 20px;
+        text-align: center;
+    }
+    
+    .venue-name {
+        font-size: 2.2rem;
+    }
+    
+    .venue-address {
+        font-size: 1.3rem;
+    }
+    
+    .venue-time {
+        font-size: 1.1rem;
+    }
+    
+    .directions-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        height: 50px;
+    }
+    
+    .map-container iframe {
+        height: 200px;
+    }
+    
+    .countdown-timer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap; /* Позволяет элементу переноситься на новую строку при необходимости */
+    }
+    
+    .time-block {
+        width: 70px;
+        height: 70px;
+        margin: 5px;
+    }
+    
+    .time-number {
+        font-size: 1.6rem;
+    }
+    
+    .time-label {
+        font-size: 0.8rem;
+    }
+    
+    .time-separator {
+        font-size: 1.4rem;
+        margin: 0 3px;
+    }
+    
+    .glass-card {
+        transform: scale(0.9);
+    }
+    
+    .page-nav {
+        right: 10px;
+        gap: 12px;
+    }
+    
+    .nav-dot {
+        width: 14px;
+        height: 14px;
+    }
+    
+    .modal-content {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .modal-content h3 {
+        font-size: 1.6rem;
+    }
+    
+    .modal-content input {
+        padding: 12px;
+        font-size: 1.1rem;
+    }
+    
+    .modal-content button {
+        padding: 12px;
+        font-size: 1rem;
+        height: 48px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* Extra Small Screens (below 480px) */
+@media (max-width: 479px) {
+    .greeting {
+        font-size: 1.8rem;
+    }
+    
+    .guest-greeting {
+        font-size: 1.4rem;
+    }
+    
+    .couple-names {
+        gap: 5px;
+    }
+    
+    .groom-name,
+    .bride-name {
+        font-size: 2.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+    
+    .time-block {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .time-number {
+        font-size: 1.4rem;
+    }
+    
+    .time-label {
+        font-size: 0.7rem;
+    }
+    
+    .time-separator {
+        font-size: 1.2rem;
+    }
+    
+    .map-container iframe {
+        height: 150px;
+    }
+    
+    .directions-btn {
+        padding: 10px;
+        font-size: 1rem;
+        height: 45px;
+    }
+}
+
+/* Footer Styles */
+footer {
+    position: relative;
+    width: 100%;
+    padding: 5px 0;
+    text-align: center;
+    background: rgba(44, 85, 48, 0.1); /* Лёгкий зелёный оттенок для фона */
+    color: #2c5530;
+    font-family: 'Poiret One', cursive;
+    font-size: 1rem;
+    z-index: 1000;
+    margin-top: 40px;
+}
+
+footer b {
+    color: #d4af37; /* Золотой цвет для имени */
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+footer::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+/* Responsive Footer */
+@media (max-width: 799px) {
+    footer {
+        padding: 15px 0;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 479px) {
+    footer {
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+    
+    footer::before,
+    footer::after {
+        width: 60px;
+    }
+}
+
+
+/* Кнопки */
+/* Button Styles */
+button {
+    background: #2c5530; /* Зелёный цвет, соответствующий тематике */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 5px;
+    font-family: 'Poiret One', cursive; /* Соответствие шрифтам страницы */
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: #3c6540; /* Темно-зелёный оттенок при наведении */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(44, 85, 48, 0.2);
+}
+
+button.secondary {
+    background: #d4af37; /* Золотой цвет для вторичных кнопок */
+    color: #2c5530;
+}
+
+button.secondary:hover {
+    background: #c7a132; /* Немного затемнённый золотой */
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3);
+}
+
+button:disabled {
+    background: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive Button Styles */
+@media (max-width: 799px) {
+    button {
+        padding: 10px 15px;
+        font-size: 1.1rem;
+        margin: 3px;
+    }
+}
+
+@media (max-width: 479px) {
+    button {
+        padding: 8px 12px;
+        font-size: 1rem;
+        margin: 2px;
+    }
+}
