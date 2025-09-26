@@ -742,8 +742,8 @@ function addToCalendar() {
     
     const eventDescriptions = {
         uz: "To'yi marosimi - Amru-Maruf osh",
-        ru: "Свадебная церемония - ресторан Амру-Маруф",
-        en: "Wedding ceremony - Amru-Maruf restaurant"
+        ru: "Свадебная церемония - плов Амру-Маруф",
+        en: "Wedding ceremony - Amru-Maruf plov"
     };
     
     const eventLocation = "Amru-Maruf osh, Yunusobod tumani, Toshkent";
