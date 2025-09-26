@@ -37,7 +37,10 @@ const translations = {
         welcomeMessage: "🎉 Xush kelibsiz,",
         weddingDayMessage: "🎉 TO'Y KUNI KELDI! 🎉",
         musicOn: "Musiqani yoqish",
-        musicOff: "Musiqani o'chirish"
+        musicOff: "Musiqani o'chirish",
+        eventTitles: "Abdullo va Azimaxon nikoh to'yi",
+        eventDescriptions: "To'yi marosimi - Amru-Maruf osh, 2025 yil 22 oktyabr, soat 7:00",
+        musicError: "Musiqa ijro etilmadi. Iltimos, audio faylni tekshiring."
     },
     ru: {
         greeting: "Ассалом Алейкум!",
@@ -68,7 +71,10 @@ const translations = {
         welcomeMessage: "🎉 Добро пожаловать,",
         weddingDayMessage: "🎉 ДЕНЬ СВАДЬБЫ НАСТАЛ! 🎉",
         musicOn: "Включить музыку",
-        musicOff: "Выключить музыку"
+        musicOff: "Выключить музыку",
+        eventTitles: "Свадьба Абдулло и Азимахон",
+        eventDescriptions: "Свадебная церемония - ресторан Амру-Маруф, 22 октября 2025 года, 19:00",
+        musicError: "Музыка не воспроизводится. Проверьте аудиофайл."
     },
     en: {
         greeting: "Peace be upon you!",
@@ -99,7 +105,10 @@ const translations = {
         welcomeMessage: "🎉 Welcome,",
         weddingDayMessage: "🎉 WEDDING DAY IS HERE! 🎉",
         musicOn: "Turn on music",
-        musicOff: "Turn off music"
+        musicOff: "Turn off music",
+        eventTitles: "Wedding of Abdullo and Azimakhon",
+        eventDescriptions: "Wedding ceremony - Amru-Maruf restaurant, October 22, 2025, 7:00 PM",
+        musicError: "Music cannot be played. Please check the audio file."
     }
 };
 
@@ -126,7 +135,25 @@ function initializeMusic() {
         }
     } else {
         console.error('Audio element not found');
+        showMusicError();
     }
+}
+
+// Show music error notification
+function showMusicError() {
+    const errorDiv = document.createElement('div');
+    errorDiv.textContent = translations[currentLanguage].musicError;
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.bottom = '80px';
+    errorDiv.style.right = '20px';
+    errorDiv.style.background = 'rgba(255, 0, 0, 0.8)';
+    errorDiv.style.color = 'white';
+    errorDiv.style.padding = '10px';
+    errorDiv.style.borderRadius = '10px';
+    errorDiv.style.zIndex = '10000';
+    errorDiv.style.fontFamily = "'Poiret One', cursive";
+    document.body.appendChild(errorDiv);
+    setTimeout(() => errorDiv.remove(), 5000);
 }
 
 // Attempt to play music
@@ -140,6 +167,7 @@ function tryPlayMusic() {
                 })
                 .catch(error => {
                     console.log('Music play failed:', error);
+                    showMusicError();
                 });
         }
     }
@@ -179,6 +207,7 @@ function toggleMusic() {
         updateMusicButton();
     } else {
         console.error('Audio element not found');
+        showMusicError();
     }
 }
 
@@ -729,8 +758,20 @@ function throttle(func, limit) {
 }
 
 function openDirections() {
-    const correctMapUrl = "https://maps.app.goo.gl/D59PGuc3WDtV3Lg5A";
-    window.open(correctMapUrl, '_blank');
+    const venueCoordinates = "41.327493574829546,69.26000731517259";
+    const userAgent = navigator.userAgent.toLowerCase();
+    let mapUrl;
+    
+    if (userAgent.includes('android')) {
+        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
+    } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
+        mapUrl = `http://maps.apple.com/?daddr=${venueCoordinates}&dirflg=d`;
+    } else {
+        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
+    }
+    
+    console.log('Opening map URL:', mapUrl);
+    window.open(mapUrl, '_blank');
 }
 
 function addToCalendar() {
@@ -742,16 +783,43 @@ function addToCalendar() {
     
     const eventDescriptions = {
         uz: "To'yi marosimi - Amru-Maruf osh",
-        ru: "Свадебная церемония - плов Амру-Маруф",
-        en: "Wedding ceremony - Amru-Maruf plov"
+        ru: "Свадебная церемония - ресторан Амру-Маруф",
+        en: "Wedding ceremony - Amru-Maruf restaurant"
     };
     
     const eventLocation = "Amru-Maruf osh, Yunusobod tumani, Toshkent";
-    const startDate = "20251022T140000Z";
-    const endDate = "20251022T180000Z";
+    const startDate = "20251022T190000Z";
+    const endDate = "20251022T230000Z";
     
     const calendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitles[currentLanguage])}&dates=${startDate}/${endDate}&details=${encodeURIComponent(eventDescriptions[currentLanguage])}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
     window.open(calendarUrl, '_blank');
+}
+
+function shareOnSocial(platform) {
+    if (platform === 'telegram') {
+        const t = translations[currentLanguage];
+        const eventTitle = t.eventTitles;
+        const eventDescription = t.eventDescriptions.replace(/<br>/g, '\n');
+        const eventLocation = t.venueName;
+        const siteUrl = window.location.href || "https://meek-gelato-2836d6.netlify.app/";
+        const guestName = document.getElementById('guestName')?.textContent || t.guestDefault;
+
+        // Form share text
+        const shareText = `${t.welcomeMessage} ${guestName}!\n\n` +
+                         `${eventTitle}\n` +
+                         `${eventDescription}\n` +
+                         `📍 ${eventLocation}\n` +
+                         `🔗 ${siteUrl}`;
+
+        // Encode text for URL
+        const encodedText = encodeURIComponent(shareText);
+
+        // Create Telegram share URL
+        const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(siteUrl)}&text=${encodedText}`;
+
+        // Open Telegram
+        window.open(telegramUrl, '_blank');
+    }
 }
 
 let touchStartY = 0;
@@ -874,9 +942,9 @@ function createManualSakura() {
 }
 
 function initializeFlowerWaterfall() {
-    setInterval(createColorfulFlower, 800);
-    setInterval(createSparkle, 1200);
-    setInterval(createManualSakura, 1500);
+    setInterval(createColorfulFlower, 1200);
+    setInterval(createSparkle, 1800);
+    setInterval(createManualSakura, 2000);
 }
 
 setTimeout(() => {
