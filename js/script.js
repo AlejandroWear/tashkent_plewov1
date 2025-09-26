@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
     showGuestModal();
     initializeCountdown();
     initializeNavigation();
-    initializeScrolling();
+    // Removed initializeScrolling() to prevent auto-scrolling
     initializeTouchNavigation();
     createLanguageSwitcher();
     changeLanguage('uz'); // Set default language
@@ -483,6 +483,7 @@ function goToPage(pageNumber) {
     currentPage = pageNumber;
     const targetSection = document.getElementById(`page${pageNumber}`);
     if (targetSection) {
+        // Use manual scroll instead of smooth behavior to have more control
         targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     updateNavigationDots();
@@ -514,33 +515,8 @@ function updateCurrentPage() {
     });
 }
 
-function initializeScrolling() {
-    document.documentElement.style.scrollBehavior = 'smooth';
-    document.addEventListener('keydown', handleKeyboardNavigation);
-}
-
-function handleKeyboardNavigation(event) {
-    switch(event.key) {
-        case 'ArrowDown':
-        case 'PageDown':
-            event.preventDefault();
-            if (currentPage < 3) goToPage(currentPage + 1);
-            break;
-        case 'ArrowUp':
-        case 'PageUp':
-            event.preventDefault();
-            if (currentPage > 1) goToPage(currentPage - 1);
-            break;
-        case 'Home':
-            event.preventDefault();
-            goToPage(1);
-            break;
-        case 'End':
-            event.preventDefault();
-            goToPage(3);
-            break;
-    }
-}
+// Removed initializeScrolling and handleKeyboardNavigation functions
+// to prevent automatic scrolling behavior
 
 function throttle(func, limit) {
     let inThrottle;
@@ -555,23 +531,6 @@ function throttle(func, limit) {
     };
 }
 
-// function openDirections() {
-//     const venueCoordinates = "41.3281259,69.2644192";
-//     const venueName = "Amru-Maruf osh, Yunusobod tumani";
-//     const userAgent = navigator.userAgent.toLowerCase();
-//     let mapUrl;
-//     if (userAgent.includes('android')) {
-//         mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&destination_place_id=${encodeURIComponent(venueName)}`;
-//     } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
-//         mapUrl = `maps://maps.google.com/maps?daddr=${venueCoordinates}&amp;ll=`;
-//         setTimeout(() => {
-//             window.location.href = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}`;
-//         }, 1000);
-//     } else {
-//         mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}`;
-//     }
-//     window.open(mapUrl, '_blank');
-// }
 function openDirections() {
     const venueCoordinates = "41.327493574829546,69.26000731517259";
     const venueName = "Amru-Maruf osh, Yunusobod tumani";
