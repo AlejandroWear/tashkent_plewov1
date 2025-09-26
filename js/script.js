@@ -6,11 +6,6 @@
     $('.sakura-falling').sakura();
 })(jQuery);
 
-$(document).on('click', function(){
-    document.getElementById("my_audio").play();
-    console.log('Audio played on user interaction');
-});
-
 // Translations object
 const translations = {
     uz: {
@@ -40,7 +35,9 @@ const translations = {
         calendarBtn: "Kalendarga qo'shish",
         telegramBtn: "Telegramga yuborish",
         welcomeMessage: "🎉 Xush kelibsiz,",
-        weddingDayMessage: "🎉 TO'Y KUNI KELDI! 🎉"
+        weddingDayMessage: "🎉 TO'Y KUNI KELDI! 🎉",
+        musicOn: "Musiqani yoqish",
+        musicOff: "Musiqani o'chirish"
     },
     ru: {
         greeting: "Ассалом Алейкум!",
@@ -69,7 +66,9 @@ const translations = {
         calendarBtn: "Добавить в календарь",
         telegramBtn: "Отправить в Telegram",
         welcomeMessage: "🎉 Добро пожаловать,",
-        weddingDayMessage: "🎉 ДЕНЬ СВАДЬБЫ НАСТАЛ! 🎉"
+        weddingDayMessage: "🎉 ДЕНЬ СВАДЬБЫ НАСТАЛ! 🎉",
+        musicOn: "Включить музыку",
+        musicOff: "Выключить музыку"
     },
     en: {
         greeting: "Peace be upon you!",
@@ -98,69 +97,136 @@ const translations = {
         calendarBtn: "Add to Calendar",
         telegramBtn: "Share on Telegram",
         welcomeMessage: "🎉 Welcome,",
-        weddingDayMessage: "🎉 WEDDING DAY IS HERE! 🎉"
+        weddingDayMessage: "🎉 WEDDING DAY IS HERE! 🎉",
+        musicOn: "Turn on music",
+        musicOff: "Turn off music"
     }
 };
 
 let currentLanguage = 'uz';
+let currentPage = 1;
+let guestName = '';
+let countdownInterval;
+let isMusicPlaying = false; // Music starts off by default
+let audioElement = null;
+let hasUserInteracted = false; // Track user interaction
 
-// Set the date we're counting down to
-var countDownDate = new Date("Oct 22, 2025 18:00:00").getTime();
-
-// Update the count down every 1 second
-var x = setInterval(function() {
-    var now = new Date().getTime();
-    var distance = countDownDate - now;
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-    if (document.getElementById("days")) {
-        document.getElementById("days").textContent = String(days).padStart(2, '0');
-        document.getElementById("hours").textContent = String(hours).padStart(2, '0');
-        document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
-        document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+// Initialize music controls
+function initializeMusic() {
+    audioElement = document.getElementById("my_audio");
+    if (audioElement) {
+        audioElement.volume = 0.7; // Set default volume
+        const savedMusicState = localStorage.getItem('musicEnabled');
+        isMusicPlaying = savedMusicState === 'true';
+        updateMusicButton();
+        
+        // Only attempt to play music if user has interacted and music is enabled
+        if (isMusicPlaying && hasUserInteracted) {
+            tryPlayMusic();
+        }
+    } else {
+        console.error('Audio element not found');
     }
-    
-    if (distance < 0) {
-        clearInterval(x);
-        const countdownSection = document.querySelector('.countdown-timer');
-        if (countdownSection) {
-            countdownSection.innerHTML = `<div class="wedding-day-message">${translations[currentLanguage].weddingDayMessage}</div>`;
+}
+
+// Attempt to play music
+function tryPlayMusic() {
+    if (audioElement && isMusicPlaying) {
+        const playPromise = audioElement.play();
+        if (playPromise !== undefined) {
+            playPromise
+                .then(() => {
+                    console.log('Music started successfully');
+                })
+                .catch(error => {
+                    console.log('Music play failed:', error);
+                });
         }
     }
-}, 1000);
+}
 
+// Handle user interaction to enable music
+function handleUserInteraction() {
+    if (!hasUserInteracted) {
+        hasUserInteracted = true;
+        if (isMusicPlaying) {
+            tryPlayMusic();
+        }
+        // Remove interaction listeners after first interaction
+        document.removeEventListener('click', handleUserInteraction);
+        document.removeEventListener('touchstart', handleUserInteraction);
+    }
+}
+
+// Toggle music on/off
+function toggleMusic() {
+    if (!audioElement) {
+        audioElement = document.getElementById("my_audio");
+    }
+
+    if (audioElement) {
+        if (isMusicPlaying) {
+            audioElement.pause();
+            isMusicPlaying = false;
+            localStorage.setItem('musicEnabled', 'false');
+        } else {
+            isMusicPlaying = true;
+            localStorage.setItem('musicEnabled', 'true');
+            if (hasUserInteracted) {
+                tryPlayMusic();
+            }
+        }
+        updateMusicButton();
+    } else {
+        console.error('Audio element not found');
+    }
+}
+
+// Update music button appearance
+function updateMusicButton() {
+    const musicBtn = document.getElementById('musicToggle');
+    if (musicBtn) {
+        musicBtn.textContent = isMusicPlaying ? '🎵' : '🔇';
+        musicBtn.classList.toggle('active', isMusicPlaying);
+        musicBtn.classList.toggle('muted', !isMusicPlaying);
+        musicBtn.title = isMusicPlaying ? translations[currentLanguage].musicOff : translations[currentLanguage].musicOn;
+    }
+}
+
+// Set up interaction listeners
+document.addEventListener('click', handleUserInteraction);
+document.addEventListener('touchstart', handleUserInteraction);
+
+// Console messages
 var styles = [
-    'background: linear-gradient(#D33106, #571402)'
-    , 'border: 4px solid #3E0E02'
-    , 'color: white'
-    , 'display: block'
-    , 'text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3)'
-    , 'box-shadow: 0 2px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset'
-    , 'line-height: 40px'
-    , 'text-align: center'
-    , 'font-weight: bold'
-    , 'font-size: 32px'
+    'background: linear-gradient(#D33106, #571402)',
+    'border: 4px solid #3E0E02',
+    'color: white',
+    'display: block',
+    'text-shadow: 0 2px 0 rgba(0, 0, 0, 0.3)',
+    'box-shadow: 0 2px 0 rgba(255, 255, 255, 0.4) inset, 0 5px 3px -5px rgba(0, 0, 0, 0.5), 0 -13px 5px -10px rgba(255, 255, 255, 0.4) inset',
+    'line-height: 40px',
+    'text-align: center',
+    'font-weight: bold',
+    'font-size: 32px'
 ].join(';');
 
 var styles1 = [
-    'color: #FF6C37'
-    , 'display: block'
-    , 'text-shadow: 0 2px 0 rgba(0, 0, 0, 1)'
-    , 'line-height: 40px'
-    , 'font-weight: bold'
-    , 'font-size: 32px'
+    'color: #FF6C37',
+    'display: block',
+    'text-shadow: 0 2px 0 rgba(0, 0, 0, 1)',
+    'line-height: 40px',
+    'font-weight: bold',
+    'font-size: 32px'
 ].join(';');
 
 var styles2 = [
-    'color: teal'
-    , 'display: block'
-    , 'text-shadow: 0 2px 0 rgba(0, 0, 0, 1)'
-    , 'line-height: 40px'
-    , 'font-weight: bold'
-    , 'font-size: 32px'
+    'color: teal',
+    'display: block',
+    'text-shadow: 0 2px 0 rgba(0, 0, 0, 1)',
+    'line-height: 40px',
+    'font-weight: bold',
+    'font-size: 32px'
 ].join(';');
 
 console.log('\n\n%c SAVE THE DATE: 22nd Oct, 2025!', styles);
@@ -184,31 +250,35 @@ function handleGuestNameFromUrl() {
     }
 }
 
-let currentPage = 1;
-let guestName = '';
-let countdownInterval;
+function showGuestModal() {
+    const modal = document.getElementById('guestModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+    setGuestNameDisplay(translations[currentLanguage].guestDefault);
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     handleGuestNameFromUrl();
     showGuestModal();
     initializeCountdown();
     initializeNavigation();
-    // Removed initializeScrolling() to prevent auto-scrolling
     initializeTouchNavigation();
     createLanguageSwitcher();
-    changeLanguage('uz'); // Set default language
+    changeLanguage('uz');
+    initializeMusic();
 });
 
 function createLanguageSwitcher() {
     const languageSwitcher = document.createElement('div');
     languageSwitcher.className = 'language-switcher';
     languageSwitcher.innerHTML = `
+        <button class="music-btn" id="musicToggle" onclick="toggleMusic()">🔇</button>
         <button class="lang-btn active" onclick="changeLanguage('uz')">UZ</button>
         <button class="lang-btn" onclick="changeLanguage('ru')">RU</button>
         <button class="lang-btn" onclick="changeLanguage('en')">EN</button>
     `;
     
-    // Add CSS for language switcher
     const style = document.createElement('style');
     style.textContent = `
         .language-switcher {
@@ -242,7 +312,23 @@ function createLanguageSwitcher() {
             min-width: 45px;
         }
 
-        .lang-btn:hover {
+        .music-btn {
+            background: transparent;
+            color: #2c5530;
+            border: 2px solid transparent;
+            padding: 8px 12px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            min-width: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lang-btn:hover,
+        .music-btn:hover {
             background: rgba(44, 85, 48, 0.1);
             border-color: #2c5530;
         }
@@ -252,6 +338,20 @@ function createLanguageSwitcher() {
             color: white;
             border-color: #2c5530;
             box-shadow: 0 2px 8px rgba(44, 85, 48, 0.3);
+        }
+
+        .music-btn.active {
+            background: #2c5530;
+            color: white;
+            border-color: #2c5530;
+            box-shadow: 0 2px 8px rgba(44, 85, 48, 0.3);
+        }
+
+        .music-btn.muted {
+            background: #d4af37;
+            color: white;
+            border-color: #d4af37;
+            opacity: 0.7;
         }
 
         @media (max-width: 799px) {
@@ -267,6 +367,12 @@ function createLanguageSwitcher() {
                 font-size: 0.8rem;
                 min-width: 40px;
             }
+            
+            .music-btn {
+                padding: 6px 10px;
+                font-size: 1rem;
+                min-width: 40px;
+            }
         }
     `;
     
@@ -277,24 +383,32 @@ function createLanguageSwitcher() {
 function changeLanguage(lang) {
     currentLanguage = lang;
     
-    // Update active button
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    event.target.classList.add('active');
+    const targetBtn = document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`);
+    if (targetBtn) targetBtn.classList.add('active');
     
-    // Update all translatable elements
+    document.querySelectorAll('.modal-lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const modalBtn = document.querySelector(`.modal-lang-btn[onclick="changeLanguageInModal('${lang}')"]`);
+    if (modalBtn) modalBtn.classList.add('active');
+    
     updateTranslations(lang);
+    
+    const modal = document.getElementById('guestModal');
+    if (modal && !modal.classList.contains('hidden')) {
+        updateModalTranslations(lang);
+    }
 }
 
 function updateTranslations(lang) {
     const t = translations[lang];
     
-    // Update greeting
     const greeting = document.querySelector('.greeting');
     if (greeting) greeting.textContent = t.greeting;
     
-    // Update guest greeting
     const guestGreeting = document.querySelector('.guest-greeting');
     if (guestGreeting && document.getElementById('guestName')) {
         const guestNameEl = document.getElementById('guestName');
@@ -305,11 +419,9 @@ function updateTranslations(lang) {
         guestGreeting.innerHTML = `${t.guestGreeting} <span id="guestName">${guestNameEl.textContent}</span>!`;
     }
     
-    // Update invitation text
     const mainText = document.querySelector('.main-text');
     if (mainText) mainText.textContent = t.invitationText;
     
-    // Update couple names
     const groomName = document.querySelector('.groom-name');
     const brideName = document.querySelector('.bride-name');
     const conjunction = document.querySelector('.conjunction');
@@ -317,7 +429,6 @@ function updateTranslations(lang) {
     if (groomName) groomName.textContent = t.groomName;
     if (brideName) brideName.textContent = t.brideName;
     
-    // Update conjunction between names
     if (conjunction) {
         if (lang === 'uz') {
             conjunction.textContent = 'va ';
@@ -328,15 +439,12 @@ function updateTranslations(lang) {
         }
     }
     
-    // Update wedding details
     const weddingDetails = document.querySelector('.wedding-details');
     if (weddingDetails) weddingDetails.innerHTML = t.weddingDetails;
     
-    // Update family signature
     const familySignature = document.querySelector('.family-signature p');
     if (familySignature) familySignature.innerHTML = t.familySignature;
     
-    // Update location section
     const locationTitle = document.querySelector('.location-page .section-title');
     if (locationTitle) locationTitle.textContent = t.locationTitle;
     
@@ -355,11 +463,9 @@ function updateTranslations(lang) {
     const directionsBtn = document.querySelector('.directions-btn');
     if (directionsBtn) directionsBtn.textContent = t.directionsBtn;
     
-    // Update countdown section
     const countdownTitle = document.querySelector('.countdown-page .section-title');
     if (countdownTitle) countdownTitle.textContent = t.countdownTitle;
     
-    // Update time labels
     const timeLabels = document.querySelectorAll('.time-label');
     if (timeLabels.length >= 4) {
         timeLabels[0].textContent = t.days;
@@ -368,35 +474,130 @@ function updateTranslations(lang) {
         timeLabels[3].textContent = t.seconds;
     }
     
-    // Update modal
     const modalTitle = document.querySelector('.modal-content h3');
     if (modalTitle) modalTitle.textContent = t.modalTitle;
     
     const modalInput = document.getElementById('guestInput');
     if (modalInput) modalInput.placeholder = t.modalPlaceholder;
     
-    const modalButtons = document.querySelectorAll('.modal-content button');
+    const modalButtons = document.querySelectorAll('.modal-content button:not(.modal-lang-btn)');
     if (modalButtons.length >= 2) {
         modalButtons[0].textContent = t.modalConfirm;
         modalButtons[1].textContent = t.modalSkip;
     }
     
-    // Update action buttons if they exist
     const calendarBtn = document.querySelector('button[onclick*="addToCalendar"]');
     if (calendarBtn) calendarBtn.textContent = t.calendarBtn;
     
     const telegramBtn = document.querySelector('button[onclick*="shareOnSocial"]');
     if (telegramBtn) telegramBtn.textContent = t.telegramBtn;
+    
+    updateMusicButton(); // Update music button text
 }
 
-function showGuestModal() {
-    const modal = document.getElementById('guestModal');
-    const savedName = localStorage.getItem('guestName');
-    const nameFromUrl = getUrlParameter('name');
-    if (savedName || nameFromUrl) {
-        modal.classList.add('hidden');
-    } else {
-        modal.classList.remove('hidden');
+function addLanguageSwitcherToModal() {
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent && !modalContent.querySelector('.modal-lang-switcher')) {
+        const langSwitcher = document.createElement('div');
+        langSwitcher.className = 'modal-lang-switcher';
+        langSwitcher.innerHTML = `
+            <button class="modal-lang-btn ${currentLanguage === 'uz' ? 'active' : ''}" onclick="changeLanguageInModal('uz')">UZ</button>
+            <button class="modal-lang-btn ${currentLanguage === 'ru' ? 'active' : ''}" onclick="changeLanguageInModal('ru')">RU</button>
+            <button class="modal-lang-btn ${currentLanguage === 'en' ? 'active' : ''}" onclick="changeLanguageInModal('en')">EN</button>
+        `;
+        
+        modalContent.insertBefore(langSwitcher, modalContent.firstChild);
+        
+        const modalLangStyles = document.createElement('style');
+        modalLangStyles.id = 'modal-lang-styles';
+        modalLangStyles.textContent = `
+            .modal-lang-switcher {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-bottom: 20px;
+                padding: 8px;
+                background: rgba(44, 85, 48, 0.05);
+                border-radius: 15px;
+                border: 1px solid rgba(44, 85, 48, 0.1);
+            }
+            
+            .modal-lang-btn {
+                background: transparent;
+                color: #2c5530;
+                border: 2px solid transparent;
+                padding: 6px 12px;
+                border-radius: 10px;
+                cursor: pointer;
+                font-family: 'Poiret One', cursive;
+                font-size: 0.85rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                min-width: 35px;
+            }
+            
+            .modal-lang-btn:hover {
+                background: rgba(44, 85, 48, 0.1);
+                border-color: #2c5530;
+                transform: translateY(-1px);
+            }
+            
+            .modal-lang-btn.active {
+                background: #2c5530;
+                color: white;
+                border-color: #2c5530;
+                box-shadow: 0 2px 6px rgba(44, 85, 48, 0.3);
+            }
+            
+            @media (max-width: 479px) {
+                .modal-lang-switcher {
+                    gap: 6px;
+                    padding: 6px;
+                }
+                
+                .modal-lang-btn {
+                    padding: 5px 10px;
+                    font-size: 0.8rem;
+                    min-width: 32px;
+                }
+            }
+        `;
+        document.head.appendChild(modalLangStyles);
+    }
+}
+
+function changeLanguageInModal(lang) {
+    currentLanguage = lang;
+    
+    document.querySelectorAll('.modal-lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.querySelector(`.modal-lang-btn[onclick="changeLanguageInModal('${lang}')"]`).classList.add('active');
+    
+    updateModalTranslations(lang);
+    
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const mainLangBtn = document.querySelector(`.lang-btn[onclick="changeLanguage('${lang}')"]`);
+    if (mainLangBtn) mainLangBtn.classList.add('active');
+}
+
+function updateModalTranslations(lang) {
+    const t = translations[lang];
+    
+    const modalTitle = document.querySelector('.modal-content h3');
+    if (modalTitle) modalTitle.textContent = t.modalTitle;
+    
+    const modalInput = document.getElementById('guestInput');
+    if (modalInput) modalInput.placeholder = t.modalPlaceholder;
+    
+    const modalButtons = document.querySelectorAll('.modal-content button:not(.modal-lang-btn)');
+    if (modalButtons.length >= 2) {
+        modalButtons[0].textContent = t.modalConfirm;
+        modalButtons[1].textContent = t.modalSkip;
     }
 }
 
@@ -483,7 +684,6 @@ function goToPage(pageNumber) {
     currentPage = pageNumber;
     const targetSection = document.getElementById(`page${pageNumber}`);
     if (targetSection) {
-        // Use manual scroll instead of smooth behavior to have more control
         targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     updateNavigationDots();
@@ -515,9 +715,6 @@ function updateCurrentPage() {
     });
 }
 
-// Removed initializeScrolling and handleKeyboardNavigation functions
-// to prevent automatic scrolling behavior
-
 function throttle(func, limit) {
     let inThrottle;
     return function() {
@@ -532,25 +729,8 @@ function throttle(func, limit) {
 }
 
 function openDirections() {
-    const venueCoordinates = "41.327493574829546,69.26000731517259";
-    const venueName = "Amru-Maruf osh, Yunusobod tumani";
-    const userAgent = navigator.userAgent.toLowerCase();
-    let mapUrl;
-    
-    // Правильные ссылки для навигации
-    if (userAgent.includes('android')) {
-        // Для Android - прямая ссылка на навигацию
-        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
-    } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
-        // Для iOS - пробуем открыть в приложении Apple Maps
-        mapUrl = `http://maps.apple.com/?daddr=${venueCoordinates}&dirflg=d`;
-    } else {
-        // Для десктопа и других устройств
-        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
-    }
-    
-    console.log('Opening map URL:', mapUrl);
-    window.open(mapUrl, '_blank');
+    const correctMapUrl = "https://maps.app.goo.gl/D59PGuc3WDtV3Lg5A";
+    window.open(correctMapUrl, '_blank');
 }
 
 function addToCalendar() {
@@ -629,6 +809,54 @@ function showWelcomeMessage(name) {
     }, 3000);
 }
 
+function createColorfulFlower() {
+    const flower = document.createElement('div');
+    flower.className = 'flower';
+    
+    const flowerTypes = ['petal-1', 'petal-2', 'petal-3', 'petal-4', 'petal-5', 'petal-6'];
+    const randomType = flowerTypes[Math.floor(Math.random() * flowerTypes.length)];
+    flower.classList.add(randomType);
+    
+    const leftPosition = Math.random() * 100;
+    flower.style.left = leftPosition + 'vw';
+    flower.style.top = '-20px';
+    
+    const size = 12 + Math.random() * 8;
+    flower.style.width = size + 'px';
+    flower.style.height = size + 'px';
+    
+    const duration = 8 + Math.random() * 12;
+    const driftX = (Math.random() - 0.5) * 200;
+    flower.style.setProperty('--drift-x', driftX + 'px');
+    flower.style.animationDuration = `${duration}s, ${duration * 0.5}s`;
+    flower.style.animationDelay = Math.random() * 3 + 's';
+    
+    document.body.appendChild(flower);
+    
+    setTimeout(() => {
+        if (flower.parentNode) flower.parentNode.removeChild(flower);
+    }, (duration + 3) * 1000);
+}
+
+function createSparkle() {
+    const sparkle = document.createElement('div');
+    sparkle.className = 'flower-sparkle';
+    
+    const leftPosition = Math.random() * 100;
+    sparkle.style.left = leftPosition + 'vw';
+    sparkle.style.top = '-10px';
+    
+    const duration = 6 + Math.random() * 8;
+    sparkle.style.animationDuration = duration + 's';
+    sparkle.style.animationDelay = Math.random() * 2 + 's';
+    
+    document.body.appendChild(sparkle);
+    
+    setTimeout(() => {
+        if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+    }, (duration + 2) * 1000);
+}
+
 function createManualSakura() {
     const sakura = document.createElement('div');
     sakura.className = 'manual-sakura';
@@ -645,10 +873,19 @@ function createManualSakura() {
     }, duration * 1000);
 }
 
+function initializeFlowerWaterfall() {
+    setInterval(createColorfulFlower, 800);
+    setInterval(createSparkle, 1200);
+    setInterval(createManualSakura, 1500);
+}
+
 setTimeout(() => {
     if (!document.querySelector('.sakura')) {
         console.log('Запуск резервной анимации сакуры');
-        setInterval(createManualSakura, 500);
+        initializeFlowerWaterfall();
+    } else {
+        setInterval(createColorfulFlower, 1000);
+        setInterval(createSparkle, 1500);
     }
 }, 2000);
 
@@ -656,7 +893,6 @@ window.addEventListener('beforeunload', function() {
     if (countdownInterval) clearInterval(countdownInterval);
 });
 
-// Add manual sakura styles
 const sakuraStyle = document.createElement('style');
 sakuraStyle.textContent = `
     @keyframes slideIn {

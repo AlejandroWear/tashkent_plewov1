@@ -147,7 +147,7 @@ body {
 }
 .conjunction {
     font-family: 'Ballet', cursive;
-    font-size: 2rem;
+    font-size: 4rem;
     color: #d4af37;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -420,7 +420,7 @@ body {
     background: #777;
 }
 
-/* Sakura Animations */
+/* Sakura Animations - Enhanced with colorful flowers */
 .sakura-falling {
     position: fixed;
     top: 0;
@@ -428,7 +428,7 @@ body {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: -1;
+    z-index: 0; /* Behind content blocks */
 }
 
 .sakura {
@@ -437,6 +437,77 @@ body {
     position: absolute;
     border-radius: 50%;
     z-index: 0;
+}
+
+/* Enhanced flower animations */
+.flower {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0; /* Behind content blocks */
+    width: 15px;
+    height: 15px;
+}
+
+.flower::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50% 0 50% 50%;
+    transform-origin: center;
+}
+
+.flower.petal-1::before {
+    background: linear-gradient(45deg, #ff6b9d, #ffc0cb);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+.flower.petal-2::before {
+    background: linear-gradient(45deg, #a8e6cf, #88d8a3);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+.flower.petal-3::before {
+    background: linear-gradient(45deg, #ffd93d, #ffed4e);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+.flower.petal-4::before {
+    background: linear-gradient(45deg, #c7ceea, #b19cd9);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+.flower.petal-5::before {
+    background: linear-gradient(45deg, #ff8a80, #ff5722);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+.flower.petal-6::before {
+    background: linear-gradient(45deg, #81c784, #66bb6a);
+    animation: flower-fall linear infinite, rotate-flower linear infinite;
+}
+
+@keyframes flower-fall {
+    0% {
+        transform: translateY(-100px) translateX(0) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--drift-x, 0)) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@keyframes rotate-flower {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* Animation Keyframes */
