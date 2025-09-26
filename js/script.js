@@ -758,20 +758,8 @@ function throttle(func, limit) {
 }
 
 function openDirections() {
-    const venueCoordinates = "41.327493574829546,69.26000731517259";
-    const userAgent = navigator.userAgent.toLowerCase();
-    let mapUrl;
-    
-    if (userAgent.includes('android')) {
-        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
-    } else if (userAgent.includes('iphone') || userAgent.includes('ipad')) {
-        mapUrl = `http://maps.apple.com/?daddr=${venueCoordinates}&dirflg=d`;
-    } else {
-        mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${venueCoordinates}&travelmode=driving`;
-    }
-    
-    console.log('Opening map URL:', mapUrl);
-    window.open(mapUrl, '_blank');
+    const correctMapUrl = "https://maps.app.goo.gl/D59PGuc3WDtV3Lg5A";
+    window.open(correctMapUrl, '_blank');
 }
 
 function addToCalendar() {
