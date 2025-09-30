@@ -827,16 +827,20 @@ function handleTouchEnd(event) {
     handleSwipe();
 }
 
-function handleSwipe() {
-    const swipeThreshold = 50;
-    const swipeDistance = touchStartY - touchEndY;
-    if (Math.abs(swipeDistance) > swipeThreshold) {
-        if (swipeDistance > 0) {
-            if (currentPage < 3) goToPage(currentPage + 1);
-        } else {
-            if (currentPage > 1) goToPage(currentPage - 1);
-        }
-    }
+// function handleSwipe() {
+//     const swipeThreshold = 50;
+//     const swipeDistance = touchStartY - touchEndY;
+//     if (Math.abs(swipeDistance) > swipeThreshold) {
+//         if (swipeDistance > 0) {
+//             if (currentPage < 3) goToPage(currentPage + 1);
+//         } else {
+//             if (currentPage > 1) goToPage(currentPage - 1);
+//         }
+//     }
+// }
+function goToPage(pageNumber) {
+    currentPage = pageNumber;
+    updateNavigationDots();
 }
 
 function showWelcomeMessage(name) {
